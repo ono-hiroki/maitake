@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset      # ReplicaSetの名前
+  namespace: dev
+spec:
+  replicas: 2                 # 複製するPodの数 (ここでは3つ)
+  selector:                   # Podを選択するためのラベルセレクター
+    matchLabels:
+      app: nginx              # Podのラベル
+  template:                   # Podのテンプレート (Podの定義)
+    metadata:
+      labels:
+        app: nginx            # Podに付与するラベル
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
