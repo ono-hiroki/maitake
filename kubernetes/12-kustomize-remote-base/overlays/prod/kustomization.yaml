@@ -3,23 +3,25 @@ kind: Kustomization
 
 # 同じリモート base を参照
 resources:
-  - https://github.com/kubernetes-sigs/kustomize//examples/helloWorld?ref=master
+  - https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main
 
 # 本番環境用のカスタマイズ
 namePrefix: prod-
 
-commonLabels:
-  env: production
+labels:
+  - pairs:
+      env: production
+    includeSelectors: true
 
 # レプリカ数を増やす
 replicas:
-  - name: the-deployment
+  - name: hello-app
     count: 5
 
 # イメージタグを変更
 images:
-  - name: monopole/hello
-    newTag: "2"
+  - name: nginx
+    newTag: "1.26"
 
 # パッチでリソースを追加
 patches:

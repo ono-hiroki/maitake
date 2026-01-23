@@ -3,12 +3,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: the-deployment
+  name: hello-app
 spec:
   template:
     spec:
       containers:
-        - name: the-container
+        - name: hello
           resources:
             requests:
               memory: "64Mi"

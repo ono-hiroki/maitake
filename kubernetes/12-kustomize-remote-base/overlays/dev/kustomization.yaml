@@ -1,17 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Kustomize 公式サンプルの helloWorld を参照
+# リモートの base を参照
 resources:
-  - https://github.com/kubernetes-sigs/kustomize//examples/helloWorld?ref=master
+  - https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main
 
 # ローカルでカスタマイズ
 namePrefix: dev-
 
-commonLabels:
-  env: development
+labels:
+  - pairs:
+      env: development
+    includeSelectors: true
 
 # レプリカ数を変更
 replicas:
-  - name: the-deployment
+  - name: hello-app
     count: 2
