@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-path-ingress
+  namespace: dev
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          # /app へのリクエスト
+          - path: /app
+            pathType: Prefix
+            backend:
+              service:
+                name: nginxserver-service
+                port:
+                  name: http
+          # /web へのリクエスト
+          - path: /web
+            pathType: Prefix
+            backend:
+              service:
+                name: nginxserver-service
+                port:
+                  name: http

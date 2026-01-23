@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginxserver-ingress
+  namespace: dev
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: nginxserver-service
+                port:
+                  name: http
+            path: /
+            pathType: Exact
