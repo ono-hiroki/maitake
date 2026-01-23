@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-service
+  name: nginx-service         # Service の名前
+  namespace: dev
+spec:
+  ports:
+    - name: http              # ポートの名前（任意）
+      port: 80                # Service が LISTEN するポート番号
+      protocol: TCP
+      targetPort: 80          # Pod が LISTEN しているポート番号
+  selector:
+    app: nginx                # このラベルに一致する Pod にトラフィックを送る
+  type: LoadBalancer          # Service のタイプ

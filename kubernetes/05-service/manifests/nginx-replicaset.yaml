@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset      # ReplicaSet の名前
+  namespace: dev              # 作成する namespace
+spec:
+  replicas: 6                 # 作成する Pod の数
+  selector:                   # 管理対象の Pod を選択するラベル
+    matchLabels:
+      app: nginx
+  template:                   # Pod のテンプレート
+    metadata:
+      labels:
+        app: nginx            # Pod に付与するラベル（selector と一致させる）
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        env:
+        - name: NODE_NAME               # 環境変数 NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName  # Pod が動いている Node 名を取得
+        - name: POD_NAME                # 環境変数 POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name  # Pod 自身の名前を取得

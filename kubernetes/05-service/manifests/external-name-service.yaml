@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-external-service
+  namespace: dev
+spec:
+  type: ExternalName
+  externalName: example.com
