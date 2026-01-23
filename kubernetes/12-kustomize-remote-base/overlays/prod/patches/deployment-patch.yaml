@@ -1,0 +1,18 @@
+# Strategic Merge Patch の例
+# base の Deployment にリソース制限を追加
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: the-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: the-container
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
