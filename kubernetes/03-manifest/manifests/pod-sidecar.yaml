@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-sidecar
+  namespace: dev
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: logs
+      mountPath: /var/log/nginx
+  - name: log-shipper
+    image: busybox:latest
+    command:
+    - /bin/sh
+    - -c
+    - |
+      # ログファイルが作成されるまで待機
+      while [ ! -f /var/log/nginx/access.log ]; do
+        sleep 1
+      done
+      tail -f /var/log/nginx/access.log
+    volumeMounts:
+    - name: logs
+      mountPath: /var/log/nginx
+  volumes:
+  - name: logs
+    emptyDir: {}
