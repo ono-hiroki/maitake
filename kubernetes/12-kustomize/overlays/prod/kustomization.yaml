@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+# リソース名に接頭辞を追加
+namePrefix: prod-
+
+# 共通ラベルを追加
+commonLabels:
+  env: production
+
+# レプリカ数を変更（本番は3台）
+replicas:
+  - name: myapp
+    count: 3
+
+# イメージタグを指定（本番はalpineで軽量化）
+images:
+  - name: nginx
+    newTag: "1.25-alpine"
+
+# リソース増強用パッチを適用
+patches:
+  - path: resource-patch.yaml
