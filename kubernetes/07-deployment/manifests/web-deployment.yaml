@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web-deployment       # Deployment 自体に付けるラベル
+  name: web-deployment        # Deployment の名前
+  namespace: dev              # 作成先の namespace
+spec:
+  replicas: 3                 # 維持する Pod の数
+  selector:
+    matchLabels:
+      app: web                # この labelをもつPod を管理対象とする
+  strategy:
+    type: RollingUpdate       # デプロイ戦略（RollingUpdate / Recreate）
+    rollingUpdate:
+      maxSurge: 1             # 更新中に追加で作成可能な Pod の最大数
+      maxUnavailable: 1       # 更新中にダウンしていてもよい Pod の最大数
+  template:                   # ここから下は Pod のテンプレート
+    metadata:
+      labels:
+        app: web              # Pod に付けるラベル（selector.matchLabels と一致させる）
+    spec:
+      containers:
+      - image: nginx:latest   # コンテナイメージ
+        name: web             # コンテナの名前
