@@ -1,4 +1,4 @@
-# RBAC (Role-Based Access Control)
+# RBACでアクセス制御する
 
 ---
 

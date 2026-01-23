@@ -1,4 +1,4 @@
-# Kubernetes入門 - Deploymentでローリングアップデートを実現する
+# Deploymentでアプリケーションを更新する
 
 ## はじめに
 

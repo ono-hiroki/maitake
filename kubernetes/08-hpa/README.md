@@ -1,10 +1,4 @@
----
-title: "HPA 入門：CPU 使用率で Pod を自動スケーリングさせる"
-emoji: "📈"
-type: "tech"
-topics: ["kubernetes", "hpa", "autoscaling", "kind"]
-published: false
----
+# HPAでPodを自動スケーリングする
 
 ## はじめに
 
@@ -12,9 +6,7 @@ published: false
 
 Kubernetes の HorizontalPodAutoscaler（HPA）は、CPU やメモリの使用率に応じて Pod 数を自動調整してくれる機能です。本記事では kind クラスター上で HPA を構築し、公式ドキュメントのウォークスルーに沿って負荷テストを行い、スケールアウト・スケールインの動作を体験します。
 
-:::message
-本記事では `kubectl` のエイリアスとして `k` を使用しています。
-:::
+> **Note**: 本記事では `kubectl` のエイリアスとして `k` を使用しています。
 
 ## この記事で得られること
 
@@ -72,9 +64,7 @@ k create namespace dev
 namespace/dev created
 ```
 
-:::message
-kind 以外の環境（minikube、Docker Desktop、EKS など）でも同様の手順で HPA を構築できます。ただし metrics-server のセットアップ方法は環境によって異なります。
-:::
+> **Note**: kind 以外の環境（minikube、Docker Desktop、EKS など）でも同様の手順で HPA を構築できます。ただし metrics-server のセットアップ方法は環境によって異なります。
 
 ## なぜ HPA が必要なのか
 
@@ -156,9 +146,7 @@ spec:
       command: ["sh", "-c", "dd if=/dev/zero of=/dev/null bs=50M"]
 ```
 
-:::message
-`dd if=/dev/zero of=/dev/null bs=50M` は、50MB のバッファをメモリに確保してデータを読み書きするコマンドです。10Mi の制限に対して 50MB を確保しようとするため、OOMKilled が発生します。
-:::
+> **Note**: `dd if=/dev/zero of=/dev/null bs=50M` は、50MB のバッファをメモリに確保してデータを読み書きするコマンドです。10Mi の制限に対して 50MB を確保しようとするため、OOMKilled が発生します。
 
 ```bash
 k apply -f ./manifests/mem-test.yaml
@@ -314,9 +302,7 @@ spec:
     run: php-apache
 ```
 
-:::message
-`registry.k8s.io/hpa-example` は Kubernetes 公式が提供する HPA テスト用イメージです。リクエストを受けると CPU 負荷のかかる計算を行うため、スケールアウトの動作を確認しやすくなっています。
-:::
+> **Note**: `registry.k8s.io/hpa-example` は Kubernetes 公式が提供する HPA テスト用イメージです。リクエストを受けると CPU 負荷のかかる計算を行うため、スケールアウトの動作を確認しやすくなっています。
 
 このマニフェストを適用します。
 
@@ -378,9 +364,7 @@ k patch deployment metrics-server -n kube-system --type='json' -p='[
 ]'
 ```
 
-:::message alert
-`--kubelet-insecure-tls` はローカル開発環境専用のオプションです。本番環境では適切な証明書を設定してください。
-:::
+> **Warning**: `--kubelet-insecure-tls` はローカル開発環境専用のオプションです。本番環境では適切な証明書を設定してください。
 
 metrics-server が起動するまで待ちます。
 
@@ -457,21 +441,16 @@ NAME         REFERENCE               TARGETS         MINPODS   MAXPODS   REPLICA
 php-apache   Deployment/php-apache   <unknown>/50%   1         10        1          30s
 ```
 
-:::message
-適用直後は TARGETS が `<unknown>` と表示されることがあります。metrics-server がメトリクスを収集するまで 1〜2 分待ってみてください。
-:::
+> **Note**: 適用直後は TARGETS が `<unknown>` と表示されることがあります。metrics-server がメトリクスを収集するまで 1〜2 分待ってみてください。
 
 ### 方法 2: マニフェストファイル（推奨）
 
 本番運用ではマニフェストファイルで管理することを推奨します。Git で変更履歴を追跡でき、再現性も確保できます。
 
-:::message
-方法 1 で HPA を作成済みの場合は、先に削除してください。
-
-```bash
-k -n dev delete hpa php-apache
-```
-:::
+> **Note**: 方法 1 で HPA を作成済みの場合は、先に削除してください。
+> ```bash
+> k -n dev delete hpa php-apache
+> ```
 
 ```yaml
 # manifests/php-apache-hpa.yaml
@@ -574,9 +553,7 @@ k -n dev run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -
 | `--restart=Never` | 再起動しない（1 回限りの実行） |
 | `while sleep 0.01; do ...; done` | 0.01 秒間隔で無限ループ |
 
-:::message
-このコマンドは **Kubernetes クラスター内部** から Service に対してリクエストを送信します。ローカル環境の ab コマンドと異なり、port-forward なしで直接 Service にアクセスできます。
-:::
+> **Note**: このコマンドは **Kubernetes クラスター内部** から Service に対してリクエストを送信します。ローカル環境の ab コマンドと異なり、port-forward なしで直接 Service にアクセスできます。
 
 ### 観察：Pod が増える（スケールアウト）
 
@@ -638,9 +615,7 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          11
 
 最終的には `minReplicas` で指定した 1 Pod まで減少します。
 
-:::message
-スケールインの待機時間（stabilizationWindowSeconds）はデフォルトで 300 秒（5 分）です。検証を急ぎたい場合は HPA の `behavior.scaleDown.stabilizationWindowSeconds` で短くできます。
-:::
+> **Note**: スケールインの待機時間（stabilizationWindowSeconds）はデフォルトで 300 秒（5 分）です。検証を急ぎたい場合は HPA の `behavior.scaleDown.stabilizationWindowSeconds` で短くできます。
 
 ## クリーンアップ
 

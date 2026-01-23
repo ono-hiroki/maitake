@@ -1,4 +1,4 @@
-# Pod へのアクセスは Service を使おう
+# ServiceでPodにアクセスする
 
 ReplicaSet によって Pod を複数作成しましたが、Pod へどのようにリクエストをするのでしょうか？
 

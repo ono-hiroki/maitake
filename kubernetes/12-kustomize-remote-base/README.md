@@ -1,4 +1,4 @@
-# Kustomize リモート Base 入門
+# Kustomizeでリモートbaseを使う
 
 Kustomize の `resources` にはローカルパスだけでなく、**リモートの Git リポジトリ URL** を指定できます。この機能を使うと、公開リポジトリの base を参照しながら、ローカルやプライベートリポジトリで overlay を管理できます。
 

@@ -1,4 +1,4 @@
-# Ingress で HTTP ルーティングを学ぶ
+# Ingressで複数Serviceにパスベースルーティング
 
 Kubernetes クラスターで Web サービスを公開する方法として、これまで Service の各タイプ（ClusterIP、NodePort、LoadBalancer）を学びました。
 

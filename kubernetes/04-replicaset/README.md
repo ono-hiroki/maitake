@@ -1,4 +1,4 @@
-# 04. ReplicaSet で Pod を管理する
+# ReplicaSetでPodを管理する
 
 ReplicaSet を使って Pod の数を維持し、自己修復機能とスケーラビリティを体験する。
 

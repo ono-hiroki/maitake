@@ -1,8 +1,8 @@
-# ConfigMap
+# ConfigMapで設定を管理する
 
 ---
 
-# 概念編
+## 概念編
 
 ## ConfigMap とは
 

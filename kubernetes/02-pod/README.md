@@ -1,4 +1,4 @@
-# 02. Pod の基本操作
+# はじめてのPodをnginxで動かす
 
 Kubernetes の最小デプロイ単位である Pod を kubectl コマンドで操作する。
 nginx コンテナを使って Pod の起動・確認・削除を実践する。

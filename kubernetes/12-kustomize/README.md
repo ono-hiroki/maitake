@@ -1,4 +1,4 @@
-# Kustomize 入門
+# Kustomizeで環境別マニフェストを管理する
 
 ## Kustomizeとは
 
