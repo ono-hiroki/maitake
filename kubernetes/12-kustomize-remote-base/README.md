@@ -41,37 +41,51 @@ https://github.com/user/repo//path/to/dir?ref=main
 
 ## ハンズオン
 
-実際に公開されている Kustomize のサンプルを参照して試してみましょう。
+このリポジトリを使って、リモート base を参照する overlay を試してみましょう。
 
-### Step 1: ローカルに overlay を作成
+### ディレクトリ構成
 
-```bash
-mkdir -p ~/kustomize-remote-demo/overlays/dev
-cd ~/kustomize-remote-demo/overlays/dev
+```
+12-kustomize-remote-base/
+├── README.md
+└── overlays/
+    ├── dev/
+    │   └── kustomization.yaml      # 開発環境用
+    └── prod/
+        ├── kustomization.yaml      # 本番環境用
+        └── patches/
+            └── deployment-patch.yaml
 ```
 
-### Step 2: リモート base を参照する kustomization.yaml を作成
+### Step 1: overlay の確認
 
 ```yaml
-# ~/kustomize-remote-demo/overlays/dev/kustomization.yaml
+# overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Kustomize公式サンプルのhelloWorldを参照
+# リモートの base を参照
 resources:
-  - https://github.com/kubernetes-sigs/kustomize//examples/helloWorld?ref=master
+  - https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main
 
 # ローカルでカスタマイズ
 namePrefix: dev-
 
-commonLabels:
-  env: development
+labels:
+  - pairs:
+      env: development
+    includeSelectors: true
+
+# レプリカ数を変更
+replicas:
+  - name: hello-app
+    count: 2
 ```
 
-### Step 3: ビルドして確認
+### Step 2: ビルドして確認
 
 ```bash
-kustomize build .
+kubectl kustomize overlays/dev
 ```
 
 出力例:
@@ -80,9 +94,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: hello
     env: development          # ← 追加されたラベル
-  name: dev-the-service       # ← dev- プレフィックス付き
+  name: dev-hello-service     # ← dev- プレフィックス付き
 spec:
   ...
 ---
@@ -90,166 +103,186 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: hello
     env: development          # ← 追加されたラベル
-  name: dev-the-deployment    # ← dev- プレフィックス付き
+  name: dev-hello-app         # ← dev- プレフィックス付き
 spec:
+  replicas: 2                 # ← 変更されたレプリカ数
   ...
 ```
 
-### Step 4: クリーンアップ
+### Step 3: リモート base との差分を確認
+
+リモート base をそのままビルドした結果と、overlay 適用後の差分を確認できます。
 
 ```bash
-rm -rf ~/kustomize-remote-demo
+# リモート base と overlay 後の差分を表示
+# ※ URL は zsh の ? 展開を防ぐためクォートで囲む
+diff -u \
+  <(kubectl kustomize 'https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main') \
+  <(kubectl kustomize overlays/dev)
+```
+
+出力例:
+```diff
+--- /dev/fd/11
++++ /dev/fd/12
+@@ -2,7 +2,8 @@
+ kind: Service
+ metadata:
+-  name: hello-service
++  labels:
++    env: development
++  name: dev-hello-service
+ ...
+@@ -11,7 +12,9 @@
+ kind: Deployment
+ metadata:
+-  name: hello-app
++  labels:
++    env: development
++  name: dev-hello-app
+ spec:
+-  replicas: 3
++  replicas: 2
+```
+
+これにより、overlay で何が変更されたかを明確に把握できます。
+
+### Step 4: 環境間の差分を確認
+
+dev と prod の overlay を比較することもできます。
+
+```bash
+diff -u \
+  <(kubectl kustomize overlays/dev) \
+  <(kubectl kustomize overlays/prod)
 ```
 
 ---
 
-## 実用例: Public base + Private overlay
+## 実用例: prod overlay でパッチを適用
 
-これがユースケースの本命です。
+このリポジトリの prod overlay では、Strategic Merge Patch を使ってリソース制限を追加しています。
 
-### シナリオ
-
-- **Public リポジトリ**: 機密情報なしの base マニフェスト（ポートフォリオとして公開可能）
-- **Private リポジトリ**: 本番環境の値を含む overlay（ACM ARN、ドメイン名、IAM ロール ARN など）
-
-### ディレクトリ構成
-
-```
-# Public: https://github.com/yourname/eks-portfolio
-eks-portfolio/
-└── base/
-    ├── kustomization.yaml
-    ├── deployment.yaml      # image: PLACEHOLDER
-    └── ingress.yaml         # host: example.com
-
-# Private: ローカルまたは Private リポジトリ
-eks-private/
-└── overlays/
-    └── production/
-        ├── kustomization.yaml   # Public base を参照
-        └── patches/
-            ├── deployment-patch.yaml
-            └── ingress-patch.yaml
-```
-
-### Public base の例
+### prod overlay の構成
 
 ```yaml
-# eks-portfolio/base/kustomization.yaml
+# overlays/prod/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# 同じリモート base を参照
 resources:
-  - deployment.yaml
-  - ingress.yaml
-```
+  - https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main
 
-```yaml
-# eks-portfolio/base/deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: myapp
-  namespace: demo
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: myapp
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-        - name: myapp
-          image: PLACEHOLDER_IMAGE  # ← 本番値はパッチで上書き
-          ports:
-            - containerPort: 8080
-```
+# 本番環境用のカスタマイズ
+namePrefix: prod-
 
-```yaml
-# eks-portfolio/base/ingress.yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myapp
-  namespace: demo
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    # ACM ARN はパッチで追加
-spec:
-  ingressClassName: alb
-  rules:
-    - host: example.com  # ← 本番値はパッチで上書き
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: myapp
-                port:
-                  number: 80
-```
+labels:
+  - pairs:
+      env: production
+    includeSelectors: true
 
-### Private overlay の例
+# レプリカ数を増やす
+replicas:
+  - name: hello-app
+    count: 5
 
-```yaml
-# eks-private/overlays/production/kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+# イメージタグを変更
+images:
+  - name: nginx
+    newTag: "1.26"
 
-# リモートの Public base を参照
-resources:
-  - https://github.com/yourname/eks-portfolio//base?ref=main
-
-# パッチで機密値を上書き
+# パッチでリソースを追加
 patches:
   - path: patches/deployment-patch.yaml
-  - path: patches/ingress-patch.yaml
 ```
 
+### パッチファイル
+
 ```yaml
-# eks-private/overlays/production/patches/deployment-patch.yaml
+# overlays/prod/patches/deployment-patch.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
-  namespace: demo
+  name: hello-app
 spec:
   template:
     spec:
       containers:
-        - name: myapp
-          image: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/myapp:v1.0.0
-```
-
-```yaml
-# eks-private/overlays/production/patches/ingress-patch.yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myapp
-  namespace: demo
-  annotations:
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-1:123456789012:certificate/xxxxx
-    external-dns.alpha.kubernetes.io/hostname: app.mydomain.com
-spec:
-  rules:
-    - host: app.mydomain.com
+        - name: hello
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
 ```
 
 ### ビルド結果の確認
 
 ```bash
-cd eks-private/overlays/production
-kustomize build .
+kubectl kustomize overlays/prod
 ```
 
-Public base の PLACEHOLDER 値が、Private patch の本番値にマージされた結果が出力されます。
+base の Deployment に、パッチで指定したリソース制限がマージされた結果が出力されます。
+
+### リモート base との差分を確認
+
+```bash
+diff -u \
+  <(kubectl kustomize 'https://github.com/ono-hiroki/kustomize-base-example.git/bases/helloworld?ref=main') \
+  <(kubectl kustomize overlays/prod)
+```
+
+出力例:
+```diff
+--- /dev/fd/11
++++ /dev/fd/12
+@@ -2,7 +2,8 @@
+ kind: Service
+ metadata:
+-  name: hello-service
++  labels:
++    env: production
++  name: prod-hello-service
+ ...
+ kind: Deployment
+ metadata:
+-  name: hello-app
++  labels:
++    env: production
++  name: prod-hello-app
+ spec:
+-  replicas: 3
++  replicas: 5
+   ...
+       containers:
+-      - image: nginx:1.25
++      - image: nginx:1.26
+         name: hello
++        resources:
++          limits:
++            cpu: 200m
++            memory: 128Mi
++          requests:
++            cpu: 100m
++            memory: 64Mi
+```
+
+### 期待した値が適用されているか確認
+
+```bash
+# レプリカ数が 5 になっているか
+kubectl kustomize overlays/prod | grep -A2 "replicas:"
+
+# イメージタグが 1.26 になっているか
+kubectl kustomize overlays/prod | grep "image:"
+
+# リソース制限が追加されているか
+kubectl kustomize overlays/prod | grep -A8 "resources:"
+```
 
 ---
 
