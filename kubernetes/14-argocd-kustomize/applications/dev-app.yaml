@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Kustomize overlay を参照
+    repoURL: https://github.com/ono-hiroki/maitake.git
+    targetRevision: main
+    path: kubernetes/12-kustomize-remote-base/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello-dev
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

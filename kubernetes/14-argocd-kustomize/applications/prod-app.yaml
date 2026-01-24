@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Kustomize overlay を参照
+    repoURL: https://github.com/ono-hiroki/maitake.git
+    targetRevision: main
+    path: kubernetes/12-kustomize-remote-base/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello-prod
+  syncPolicy:
+    automated:
+      prune: true      # Git から削除されたリソースをクラスタからも削除
+      selfHeal: true   # クラスタ上の手動変更を Git の状態に戻す
+    syncOptions:
+      - CreateNamespace=true
