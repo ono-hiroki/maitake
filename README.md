@@ -97,8 +97,15 @@ maitake/
     ├── 12-kustomize/    # Kustomize
     ├── 12-kustomize-remote-base/  # Kustomize リモートbase
     ├── 13-rbac/         # RBAC
-    └── 14-argocd-kustomize/       # Argo CD + Kustomize
+    ├── 14-argocd-kustomize/       # Argo CD + Kustomize
+    └── 99-capstone/     # EKS Capstone（別リポジトリへのリンク）
 ```
+
+## 関連プロジェクト
+
+| リポジトリ | 説明 |
+|-----------|------|
+| [eks-capstone-base](https://github.com/ono-hiroki/eks-capstone-base) | EKS を使った Kubernetes 学習の集大成プロジェクト。Terraform による EKS クラスタ構築、Kustomize リモートベース、Argo CD による GitOps、Istio サービスメッシュなどを実践 |
 
 ## 参考資料
 
