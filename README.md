@@ -67,6 +67,12 @@
 | 13 | [RBACでアクセス制御する](./kubernetes/13-rbac/) | Role、RoleBinding によるアクセス権限管理 |
 | 14 | [Argo CD と Kustomize リモートベースの連携](./kubernetes/14-argocd-kustomize/) | GitOps によるデプロイ自動化 |
 
+### サービスメッシュ
+
+| # | タイトル | 学習内容 |
+|---|----------|----------|
+| 15 | [Istio でサービスメッシュを構築する](./kubernetes/15-istio/) | サイドカー注入、オブザーバビリティ、トラフィック管理、サーキットブレーカー、Gateway |
+
 ## 使い方
 
 1. 各チュートリアルのディレクトリに移動
@@ -98,6 +104,7 @@ maitake/
     ├── 12-kustomize-remote-base/  # Kustomize リモートbase
     ├── 13-rbac/         # RBAC
     ├── 14-argocd-kustomize/       # Argo CD + Kustomize
+    ├── 15-istio/                  # Istio サービスメッシュ
     └── 99-capstone/     # EKS Capstone（別リポジトリへのリンク）
 ```
 
