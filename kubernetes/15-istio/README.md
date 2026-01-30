@@ -76,10 +76,10 @@ k get pods -n istio-system
 
 | # | タイトル | 学習内容 |
 |---|----------|----------|
-| 01 | [サイドカー注入](./01-sidecar.md) | Pod への Envoy プロキシ自動注入、Envoy 経由の通信確認 |
-| 02 | [オブザーバビリティ](./02-observability.md) | Kiali / Jaeger による可視化、メトリクス自動収集 |
-| 03 | [トラフィック管理](./03-traffic-management.md) | VirtualService / DestinationRule、Canary Deployment |
-| 04 | [サーキットブレーカーと Gateway](./04-circuit-breaker-gateway.md) | 接続数制限、異常検出、外部トラフィックの受付 |
+| 01 | [サイドカー注入](./01-sidecar/) | Pod への Envoy プロキシ自動注入、Envoy 経由の通信確認 |
+| 02 | [オブザーバビリティ](./02-observability/) | Kiali / Jaeger による可視化、メトリクス自動収集 |
+| 03 | [トラフィック管理](./03-traffic-management/) | VirtualService / DestinationRule、Canary Deployment |
+| 04 | [サーキットブレーカーと Gateway](./04-circuit-breaker-gateway/) | 接続数制限、異常検出、外部トラフィックの受付 |
 
 ---
 

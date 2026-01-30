@@ -7,7 +7,7 @@ VirtualService と DestinationRule を使ってトラフィックルーティン
 ## 前提条件
 
 - Kubernetes クラスタが稼働していること
-- Istio がインストール済みであること（[セットアップ手順](./README.md#セットアップ)）
+- Istio がインストール済みであること（[セットアップ手順](../README.md#セットアップ)）
 
 ---
 
