@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namePrefix: prod-
+
+commonLabels:
+  env: prod
+
+namespace: prod
+
+images:
+  - name: nginx
+    newTag: "1.25-alpine"
+
+# パッチでカスタマイズ
+patches:
+  - path: replica-patch.yaml

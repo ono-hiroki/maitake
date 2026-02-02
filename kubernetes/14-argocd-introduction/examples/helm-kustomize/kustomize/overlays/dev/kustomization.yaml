@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+# リソース名にプレフィックスを追加
+namePrefix: dev-
+
+# 共通ラベルを追加
+commonLabels:
+  env: dev
+
+# namespace を指定
+namespace: dev
+
+# イメージタグを変更
+images:
+  - name: nginx
+    newTag: "1.25"

@@ -65,7 +65,8 @@
 | 12 | [Kustomizeで環境別マニフェストを管理する](./kubernetes/12-kustomize/) | Base と Overlay による環境差分管理 |
 | 12+ | [Kustomizeでリモートbaseを使う](./kubernetes/12-kustomize-remote-base/) | Git リポジトリからの base 参照 |
 | 13 | [RBACでアクセス制御する](./kubernetes/13-rbac/) | Role、RoleBinding によるアクセス権限管理 |
-| 14 | [Argo CD と Kustomize リモートベースの連携](./kubernetes/14-argocd-kustomize/) | GitOps によるデプロイ自動化 |
+| 14 | [Argo CD 入門](./kubernetes/14-argocd-introduction/) | GitOps の概念、Argo CD のアーキテクチャと主要概念、ハンズオン |
+| 14+ | [Argo CD と Kustomize リモートベースの連携](./kubernetes/14-argocd-kustomize/) | GitOps によるデプロイ自動化 |
 
 ### サービスメッシュ
 
@@ -103,6 +104,7 @@ maitake/
     ├── 12-kustomize/    # Kustomize
     ├── 12-kustomize-remote-base/  # Kustomize リモートbase
     ├── 13-rbac/         # RBAC
+    ├── 14-argocd-introduction/    # Argo CD 入門
     ├── 14-argocd-kustomize/       # Argo CD + Kustomize
     ├── 15-istio/                  # Istio サービスメッシュ
     └── 99-capstone/     # EKS Capstone（別リポジトリへのリンク）

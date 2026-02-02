@@ -1,0 +1,11 @@
+# nginx Helm chart - 開発環境用 values
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi

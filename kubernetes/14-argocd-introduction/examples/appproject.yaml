@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: my-project
+  namespace: argocd
+spec:
+  description: "My team's project"
+
+  # 許可する Git リポジトリ
+  sourceRepos:
+    - https://github.com/my-org/*
+    - https://charts.bitnami.com/bitnami
+
+  # 許可するデプロイ先
+  destinations:
+    - namespace: 'my-*'
+      server: https://kubernetes.default.svc
+    - namespace: 'default'
+      server: https://kubernetes.default.svc
+
+  # 許可するクラスタリソース
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+
+  # 許可する Namespace リソース
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: '*'
+    - group: 'apps'
+      kind: '*'

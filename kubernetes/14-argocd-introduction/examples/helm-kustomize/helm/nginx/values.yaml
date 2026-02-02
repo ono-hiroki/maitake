@@ -1,0 +1,29 @@
+# nginx Helm chart - デフォルト values
+# https://charts.bitnami.com/bitnami
+
+# レプリカ数
+replicaCount: 2
+
+# Service の設定
+service:
+  type: ClusterIP
+  port: 80
+
+# リソース制限
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# カスタム設定
+serverBlock: |-
+  server {
+    listen 8080;
+    location /health {
+      return 200 'healthy\n';
+      add_header Content-Type text/plain;
+    }
+  }

@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook-multi-env
+  namespace: argocd
+spec:
+  generators:
+    # リストジェネレーター: 複数環境を定義
+    - list:
+        elements:
+          - env: dev
+            namespace: guestbook-dev
+          - env: staging
+            namespace: guestbook-staging
+          - env: prod
+            namespace: guestbook-prod
+
+  template:
+    metadata:
+      name: 'guestbook-{{env}}'
+    spec:
+      project: default
+
+      source:
+        repoURL: https://github.com/argoproj/argocd-example-apps.git
+        targetRevision: HEAD
+        path: guestbook
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
