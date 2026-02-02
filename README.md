@@ -74,6 +74,21 @@
 |---|----------|----------|
 | 15 | [Istio でサービスメッシュを構築する](./kubernetes/15-istio/) | サイドカー注入、オブザーバビリティ、トラフィック管理、サーキットブレーカー、Gateway |
 
+## AWS ネットワーク
+
+### ネットワーク基礎
+
+| # | タイトル | 学習内容 |
+|---|----------|----------|
+| 01 | [VPCをTerraformで構築してWebサーバーを公開する](./aws-network/01-vpc-basics/) | VPC、サブネット、IGW、ルートテーブル、セキュリティグループ、パブリック/プライベートサブネットの違い |
+
+### 前提条件
+
+| ツール | 用途 |
+|--------|------|
+| [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
+| [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) | リソースの確認 |
+
 ## 使い方
 
 1. 各チュートリアルのディレクトリに移動
@@ -90,6 +105,8 @@ cat README.md
 
 ```
 maitake/
+├── aws-network/         # AWS ネットワーク ハンズオン
+│   └── 01-vpc-basics/   # VPC 基礎
 └── kubernetes/          # Kubernetes ハンズオン
     ├── 02-pod/          # Pod 基礎
     ├── 03-manifest/     # マニフェストファイル
