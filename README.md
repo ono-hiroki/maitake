@@ -81,6 +81,7 @@
 | # | タイトル | 学習内容 |
 |---|----------|----------|
 | 01 | [VPCをTerraformで構築してWebサーバーを公開する](./aws-network/01-vpc-basics/) | VPC、サブネット、IGW、ルートテーブル、セキュリティグループ、パブリック/プライベートサブネットの違い |
+| 02 | [ALBで複数のEC2にリクエストを負荷分散する](./aws-network/02-alb/) | ALB、リスナー、ターゲットグループ、ヘルスチェック、セキュリティグループの分離 |
 
 ### 前提条件
 
@@ -88,6 +89,21 @@
 |--------|------|
 | [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
 | [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) | リソースの確認 |
+
+## Azure ネットワーク
+
+### ネットワーク基礎
+
+| # | タイトル | 学習内容 |
+|---|----------|----------|
+| 01 | [VNetをTerraformで構築してWebサーバーを公開する](./azure-network/) | VNet、サブネット、NSG、Public IP、NIC、Linux VM、cloud-init |
+
+### 前提条件
+
+| ツール | 用途 |
+|--------|------|
+| [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
+| [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli) | リソースの確認 |
 
 ## 使い方
 
@@ -106,7 +122,9 @@ cat README.md
 ```
 maitake/
 ├── aws-network/         # AWS ネットワーク ハンズオン
-│   └── 01-vpc-basics/   # VPC 基礎
+│   ├── 01-vpc-basics/   # VPC 基礎
+│   └── 02-alb/          # ALB 負荷分散
+├── azure-network/       # Azure ネットワーク ハンズオン
 └── kubernetes/          # Kubernetes ハンズオン
     ├── 02-pod/          # Pod 基礎
     ├── 03-manifest/     # マニフェストファイル
