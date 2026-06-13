@@ -1,4 +1,4 @@
-# 05-application — Cloud Run Job / Artifact Registry / Service Account
+# 05-cloudrun-job — Cloud Run Job / Artifact Registry / Service Account
 
 バッチ処理の本体。
 データフロー上の位置: `GCS → Eventarc → Workflows →【Cloud Run Job】→ Cloud SQL / BigQuery`

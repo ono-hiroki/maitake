@@ -4,7 +4,7 @@
 # Cloud Run Service（常駐 HTTP アプリ）と IAP 認証の最小構成。
 # このモジュールは単体で完結する。
 #
-# 05-application（Cloud Run Job）との対比:
+# 05-cloudrun-job（Cloud Run Job）との対比:
 #   Job     = 実行して完了するバッチ（リクエストを受けない）
 #   Service = 常駐して HTTP リクエストを受け続ける（Web アプリ/API）
 #

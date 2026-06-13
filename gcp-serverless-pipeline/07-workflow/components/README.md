@@ -10,7 +10,7 @@
 | `eventarc-minimal`  | Eventarc | Pub/Sub メッセージ → Workflow 起動（最小のイベント連携） |
 
 ※ GCS 単体は 01-network の `google_compute_*` と同じノリ（`google_storage_bucket` 1個）。
-   Cloud Run Job 単体は 05-application を参照。なのでここでは扱わない。
+   Cloud Run Job 単体は 05-cloudrun-job を参照。なのでここでは扱わない。
 
 ## 使い方
 

@@ -38,6 +38,6 @@ terraform destroy
 
 ## 実運用構成との違い
 
-- 実運用構成は `vpc` を object 変数でまとめ、サブネットは application モジュール側で作成。
+- 実運用では VPC とサブネットを別管理にすることもある。
   ここでは学習のため VPC・サブネット・Firewall を1ファイルに集約。
 - state はローカル（実運用構成は GCS バックエンド）。

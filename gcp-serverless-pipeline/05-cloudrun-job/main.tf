@@ -1,5 +1,5 @@
 # =============================================================================
-# 05-application: Cloud Run Job / Artifact Registry / Service Account
+# 05-cloudrun-job: Cloud Run Job / Artifact Registry / Service Account
 # -----------------------------------------------------------------------------
 # バッチ処理の本体。
 # このモジュールは単体で完結する。

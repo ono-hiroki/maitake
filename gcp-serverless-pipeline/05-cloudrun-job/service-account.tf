@@ -9,7 +9,7 @@
 resource "google_service_account" "job" {
   account_id   = "${var.env}-${var.name}-job"
   display_name = "Cloud Run Job 実行用 SA (${var.env}-${var.name})"
-  description  = "GCPサーバーレスパイプライン学習 05-application のジョブ実行用 SA"
+  description  = "GCPサーバーレスパイプライン学習 05-cloudrun-job のジョブ実行用 SA"
 }
 
 # -----------------------------------------------------------------------------
