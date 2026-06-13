@@ -1,7 +1,7 @@
 # =============================================================================
 # 02-bigquery: BigQuery Dataset / Table
 # -----------------------------------------------------------------------------
-# demo の bigquery モジュール相当。構造化したドキュメントの保存先を学ぶ。
+# 処理データの保存先を学ぶ。
 #
 # BigQuery の階層:
 #   Project ─ Dataset（テーブルの入れ物。location を持つ）─ Table（スキーマを持つ）
@@ -50,7 +50,7 @@ resource "google_bigquery_dataset" "main" {
 
 # -----------------------------------------------------------------------------
 # Table（スキーマ付き）
-# demo が「構造化したドキュメント」を保存するイメージのサンプルテーブル。
+# demo が「処理対象データ」を保存するイメージのサンプルテーブル。
 # schema は JSON 文字列で定義する。mode は NULLABLE / REQUIRED / REPEATED。
 # -----------------------------------------------------------------------------
 resource "google_bigquery_table" "documents" {
@@ -75,7 +75,7 @@ resource "google_bigquery_table" "documents" {
       name        = "content"
       type        = "STRING"
       mode        = "NULLABLE"
-      description = "構造化された本文"
+      description = "本文"
     },
     {
       name        = "created_at"

@@ -1,7 +1,7 @@
-# 06-ui-demo — Cloud Run Service / IAP 認証 / Service Account
+# 06-cloudrun-service — Cloud Run Service / IAP 認証 / Service Account
 
-demo の `ui-demo` モジュール相当。構造化結果の可視化デモアプリ（Web）。
-データフロー上は「結果を見る画面」。05（Job）との対比で **Service** と **IAP** を学ぶ。
+Cloud Run Service（HTTP を受け続ける常駐アプリ）と IAP 認証の最小構成。
+05（Cloud Run Job）との対比で **Service** と **IAP** を学ぶ。
 
 ## 学ぶこと
 
@@ -30,9 +30,9 @@ demo の `ui-demo` モジュール相当。構造化結果の可視化デモア�
 | リソース | 名前 | 説明 |
 |---------|------|------|
 | API | run / artifactregistry / iam / iap | 4つ有効化 |
-| Service Account | `sbx-demo-ui-run@...` | サービス実行用 |
-| Artifact Registry | `sbx-demo-ui` | DOCKER（今回は空） |
-| Cloud Run Service | `sbx-demo-ui` | hello イメージ, IAP 有効 |
+| Service Account | `sbx-web-run@...` | サービス実行用 |
+| Artifact Registry | `sbx-web` | DOCKER（今回は空） |
+| Cloud Run Service | `sbx-web` | hello イメージ, IAP 有効 |
 | IAM (run.invoker) | — | IAP サービスエージェントに付与 |
 | IAM (iap.httpsResourceAccessor) | — | `iap_members` のユーザーに付与 |
 
@@ -81,7 +81,7 @@ terraform destroy
 ```bash
 # ① IAP IAM が付いているか（サーバ側の実体）
 gcloud iap web get-iam-policy --resource-type=cloud-run \
-  --service=sbx-demo-ui --region=asia-northeast1 --project=your-project-id
+  --service=sbx-web --region=asia-northeast1 --project=your-project-id
 
 # ② 拒否理由を Audit Logs で見る（ここが決定打）
 gcloud logging read 'protoPayload.serviceName="iap.googleapis.com"' \
@@ -104,13 +104,13 @@ gcloud logging read 'protoPayload.serviceName="iap.googleapis.com"' \
 ### 切り分け：アプリ本体が生きているかの確認（IAP を一時 OFF）
 
 ```bash
-gcloud run services update sbx-demo-ui --region=asia-northeast1 --no-iap
-gcloud run services add-iam-policy-binding sbx-demo-ui --region=asia-northeast1 \
+gcloud run services update sbx-web --region=asia-northeast1 --no-iap
+gcloud run services add-iam-policy-binding sbx-web --region=asia-northeast1 \
   --member=allUsers --role=roles/run.invoker        # ⚠️ 一時的に公開。確認後は必ず戻す
 curl -s -o /dev/null -w "%{http_code}\n" "$(終点URL)"  # 200 ならアプリは正常
 # 戻す: --iap を有効化し allUsers バインドを削除
-gcloud run services update sbx-demo-ui --region=asia-northeast1 --iap
-gcloud run services remove-iam-policy-binding sbx-demo-ui --region=asia-northeast1 \
+gcloud run services update sbx-web --region=asia-northeast1 --iap
+gcloud run services remove-iam-policy-binding sbx-web --region=asia-northeast1 \
   --member=allUsers --role=roles/run.invoker
 ```
 

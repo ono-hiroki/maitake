@@ -1,6 +1,6 @@
 # 04-cloudsql — Cloud SQL / VPC Peering / Secret Manager
 
-demo の `cloudsql` モジュール相当。構造化結果を保存するリレーショナルDB（PostgreSQL）。
+処理結果を保存するリレーショナルDB（PostgreSQL）。
 **このモジュールは単体で完結する**（VPC も自分で作るので 01-network には依存しない）。
 
 ## 前提

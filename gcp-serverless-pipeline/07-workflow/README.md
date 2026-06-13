@@ -1,6 +1,6 @@
 # 07-workflow — Eventarc / Workflows（イベント駆動）
 
-demo の `workflow` モジュール相当。**データフロー全体をつなぐ統合回**。
+**データフロー全体をつなぐ統合回**。
 単体完結のため、入力バケットと呼び出し先 Cloud Run Job も含めて作る。
 
 ## 実現する流れ（demo の心臓部）

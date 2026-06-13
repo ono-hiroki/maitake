@@ -1,6 +1,6 @@
 # 05-application — Cloud Run Job / Artifact Registry / Service Account
 
-demo の `application` モジュール相当。ドキュメント構造化のバッチ処理本体。
+バッチ処理の本体。
 データフロー上の位置: `GCS → Eventarc → Workflows →【Cloud Run Job】→ Cloud SQL / BigQuery`
 
 ## 学ぶこと

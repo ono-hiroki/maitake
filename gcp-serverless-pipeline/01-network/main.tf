@@ -1,7 +1,7 @@
 # =============================================================================
 # 01-network: VPC / Subnet / Firewall
 # -----------------------------------------------------------------------------
-# demo の network モジュール相当。GCP ネットワークの最小構成を学ぶ。
+# GCP ネットワークの最小構成を学ぶ。
 #
 # GCP のネットワーク階層:
 #   VPC (グローバル) ─┬─ Subnet (リージョン単位) ── ここに VM/Cloud SQL などが乗る
@@ -27,7 +27,7 @@ provider "google" {
 # -----------------------------------------------------------------------------
 # 必要な API の有効化
 # GCP は各サービスの API をプロジェクトごとに有効化しないと使えない。
-# 実運用構成 demo では root の main.tf で全 API をまとめて google_project_service
+# 実運用では root の main.tf で全 API をまとめて google_project_service
 # で管理している。この学習リポジトリでは「モジュールが必要な API を自分で有効化」
 # する方針にして、サービスと API の対応を分かりやすくする。
 #
@@ -75,7 +75,7 @@ resource "google_compute_subnetwork" "main" {
 # -----------------------------------------------------------------------------
 # Firewall: VPC 内部の通信を許可するルール
 # GCP の Firewall は VPC に対して設定し、source_ranges で送信元を絞る。
-# 実運用構成 demo では Cloud SQL (PostgreSQL=5432) の内部通信用に使っている。
+# 実運用では Cloud SQL (PostgreSQL=5432) の内部通信用に使っている。
 # -----------------------------------------------------------------------------
 resource "google_compute_firewall" "allow_internal" {
   name    = "${var.env}-${var.vpc_name}-allow-internal"

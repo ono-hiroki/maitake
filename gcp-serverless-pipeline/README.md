@@ -32,7 +32,7 @@ GCP のサーバーレス・イベント駆動な構成を題材に、**各要�
 | 03 | `03-firestore`   | Firestore（NoSQL ドキュメント DB） |
 | 04 | `04-cloudsql`    | Cloud SQL / Secret Manager / Private Service Access |
 | 05 | `05-application` | Cloud Run Job / Artifact Registry / Service Account |
-| 06 | `06-ui-demo`     | Cloud Run Service / IAP 認証 |
+| 06 | `06-cloudrun-service` | Cloud Run Service / IAP 認証 |
 | 07 | `07-workflow`    | Eventarc / Workflows（イベント駆動） |
 | 08 | `08-cicd`        | Workload Identity Federation（鍵レス認証） |
 

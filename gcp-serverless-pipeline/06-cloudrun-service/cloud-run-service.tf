@@ -6,7 +6,7 @@
 #
 # 注意: Service は実在するイメージが必要 + コンテナは $PORT で待ち受ける必要がある。
 #   学習用デフォルトは Google 公式のサンプル hello イメージ（$PORT で待ち受ける）。
-#   本物の demo では Artifact Registry の自前イメージ（可視化アプリ）を使う。
+#   実運用では Artifact Registry の自前イメージを使う。
 # =============================================================================
 
 resource "google_cloud_run_v2_service" "main" {

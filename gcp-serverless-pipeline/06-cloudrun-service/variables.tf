@@ -18,7 +18,7 @@ variable "env" {
 variable "name" {
   description = "リソース名のベース（env と組み合わせる）"
   type        = string
-  default     = "demo-ui"
+  default     = "web"
 }
 
 variable "image" {

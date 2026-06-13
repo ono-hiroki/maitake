@@ -1,6 +1,6 @@
 # 03-firestore — Firestore Database
 
-demo の `firestore` モジュール相当。NoSQL ドキュメントDB を学ぶ。demo ではプロンプト等の保存に使用。
+NoSQL ドキュメントDB を学ぶ。demo ではプロンプト等の保存に使用。
 
 ## 学ぶこと
 
@@ -36,7 +36,7 @@ TOKEN=$(gcloud auth print-access-token)
 # 書き込み: documents コレクションに doc-1 を作成
 curl -s -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
   "https://firestore.googleapis.com/v1/projects/$PROJECT/databases/$DB/documents/documents?documentId=doc-1" \
-  -d '{"fields":{"title":{"stringValue":"テスト"},"content":{"stringValue":"構造化された本文"}}}' | jq '{name, fields}'
+  -d '{"fields":{"title":{"stringValue":"テスト"},"content":{"stringValue":"本文"}}}' | jq '{name, fields}'
 
 # 読み出し: documents コレクションの一覧
 curl -s -H "Authorization: Bearer $TOKEN" \

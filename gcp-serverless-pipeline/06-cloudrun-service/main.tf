@@ -1,7 +1,7 @@
 # =============================================================================
-# 06-ui-demo: Cloud Run Service / IAP 認証 / Service Account
+# 06-cloudrun-service: Cloud Run Service / IAP 認証 / Service Account
 # -----------------------------------------------------------------------------
-# demo の ui-demo モジュール相当。構造化結果の可視化デモアプリ。
+# Cloud Run Service（常駐 HTTP アプリ）と IAP 認証の最小構成。
 # このモジュールは単体で完結する。
 #
 # 05-application（Cloud Run Job）との対比:

@@ -117,7 +117,7 @@
 | 03 | [Firestore](./gcp-serverless-pipeline/03-firestore/) | NoSQL ドキュメント DB |
 | 04 | [Cloud SQL / Secret Manager](./gcp-serverless-pipeline/04-cloudsql/) | Private Service Access、秘密を tfstate に残さない設計 |
 | 05 | [Cloud Run Job](./gcp-serverless-pipeline/05-application/) | バッチ実行、Artifact Registry、Service Account |
-| 06 | [Cloud Run Service / IAP](./gcp-serverless-pipeline/06-ui-demo/) | 常駐サービス、IAP 認証 |
+| 06 | [Cloud Run Service / IAP](./gcp-serverless-pipeline/06-cloudrun-service/) | 常駐サービス、IAP 認証 |
 | 07 | [Eventarc / Workflows](./gcp-serverless-pipeline/07-workflow/) | イベント駆動、GCS→Eventarc→Workflows→Job の統合 |
 | 08 | [Workload Identity Federation](./gcp-serverless-pipeline/08-cicd/) | GitHub Actions の鍵レス認証 |
 

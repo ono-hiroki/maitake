@@ -1,6 +1,6 @@
 # 01-network — VPC / Subnet / Firewall
 
-demo の `network` モジュール相当。GCP ネットワークの最小構成を学ぶ最初のステップ。
+GCP ネットワークの最小構成を学ぶ最初のステップ。
 
 ## 学ぶこと
 

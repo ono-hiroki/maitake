@@ -1,6 +1,6 @@
 # 08-cicd — Workload Identity Federation（鍵レス認証）
 
-demo の `cicd` モジュール相当。GitHub Actions が **サービスアカウントキー(JSON)を
+GitHub Actions が **サービスアカウントキー(JSON)を
 一切持たずに** GCP に認証してデプロイできるようにする仕組み。学習ロードマップの最終回。
 
 ## なぜ鍵レスか
@@ -116,5 +116,5 @@ WIF / SA / IAM はすべて無料。destroy を急ぐ必要はない（上記 so
 
 - 実運用構成はデプロイ先 SA（Cloud Run Job の SA）を変数で受け取って actAs を付与。
   ここは単体完結のためデモ用ランタイム SA をモジュール内で作成。
-- 実運用構成は application 用と ui-demo 用で**別々の Pool + SA** を作る（リポジトリごとに分離）。
+- 複数リポジトリから使う場合は、リポジトリごとに別々の Pool + SA を分けることが多い。
   ここでは1組のみ。
