@@ -1,0 +1,12 @@
+# Eventarc から渡される CloudEvent を受けてログするだけの最小 Workflow。
+# Pub/Sub メッセージ本文は event.data.message.data に base64 で入る。
+main:
+  params: [event]
+  steps:
+    - log_event:
+        call: sys.log
+        args:
+          text: ${"Eventarc fired. id=" + event.id + " type=" + event.type}
+          severity: INFO
+    - done:
+        return: "ok"

@@ -1,0 +1,32 @@
+main:
+  params: [event]
+  steps:
+    - init:
+        assign:
+          - bucket: $${event.data.bucket}
+          - filename: $${event.data.name}
+    - log_event:
+        call: sys.log
+        args:
+          text: $${"Processing file - " + filename + " from bucket - " + bucket}
+          severity: INFO
+    - run_job:
+        call: googleapis.run.v2.projects.locations.jobs.run
+        args:
+          name: ${cloud_run_job_id}
+          body:
+            overrides:
+              containerOverrides:
+                - env:
+                    - name: "INPUT_BUCKET"
+                      value: $${bucket}
+                    - name: "INPUT_FILENAME"
+                      value: $${filename}
+        result: job_execution
+    - log_result:
+        call: sys.log
+        args:
+          text: $${"Job execution started - " + job_execution.name}
+          severity: INFO
+    - return_result:
+        return: $${job_execution}

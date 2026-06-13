@@ -1,0 +1,13 @@
+# 最小の Workflow。実行時に渡した JSON を受け取り、ログを出して挨拶を返す。
+# 実行: gcloud workflows run <name> --data='{"name":"hono"}'
+# ${...} は Workflows の実行時式（Terraform は file() で読むので展開されない）。
+main:
+  params: [input]
+  steps:
+    - log_input:
+        call: sys.log
+        args:
+          text: ${"received name = " + input.name}
+          severity: INFO
+    - greet:
+        return: ${"Hello, " + input.name + "!"}

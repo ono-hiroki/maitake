@@ -1,0 +1,7 @@
+project_id    = "your-project-id"
+region        = "asia-northeast1"
+env           = "sbx"
+vpc_name      = "demo-sql"
+instance_name = "demo"
+database_name = "demo"
+db_user       = "demo_app"

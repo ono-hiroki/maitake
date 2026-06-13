@@ -1,0 +1,10 @@
+project_id = "your-project-id"
+region     = "asia-northeast1"
+env        = "sbx"
+name       = "demo"
+
+# 自分の GitHub アカウント/リポジトリに合わせて変更する
+# （存在しないリポジトリ名でも apply は通る。実際に GitHub Actions から
+#   認証する時に一致している必要がある）
+github_owner      = "your-github-owner"
+github_repository = "your-github-owner/your-repo"

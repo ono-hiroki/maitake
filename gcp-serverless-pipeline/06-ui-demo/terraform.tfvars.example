@@ -1,0 +1,9 @@
+project_id = "your-project-id"
+region     = "asia-northeast1"
+env        = "sbx"
+name       = "demo-ui"
+
+# IAP 経由のアクセスを許可するユーザー（自分を許可）
+iap_members = [
+  "user:you@example.com",
+]

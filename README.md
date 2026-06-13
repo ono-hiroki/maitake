@@ -105,6 +105,31 @@
 | [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
 | [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli) | リソースの確認 |
 
+## GCP サーバーレス・イベント駆動パイプライン
+
+「ファイル投入 → 自動処理 → DB 保存」というサーバーレス・イベント駆動構成を、
+各要素を独立した最小の Terraform root として 1 つずつ作りながら GCP を学ぶハンズオン。
+
+| # | タイトル | 学習内容 |
+|---|----------|----------|
+| 01 | [VPC / Subnet / Firewall](./gcp-serverless-pipeline/01-network/) | カスタムモード VPC、サブネット、ファイアウォール |
+| 02 | [BigQuery Dataset / Table](./gcp-serverless-pipeline/02-bigquery/) | サーバレス DWH、データセット/テーブル/スキーマ |
+| 03 | [Firestore](./gcp-serverless-pipeline/03-firestore/) | NoSQL ドキュメント DB |
+| 04 | [Cloud SQL / Secret Manager](./gcp-serverless-pipeline/04-cloudsql/) | Private Service Access、秘密を tfstate に残さない設計 |
+| 05 | [Cloud Run Job](./gcp-serverless-pipeline/05-application/) | バッチ実行、Artifact Registry、Service Account |
+| 06 | [Cloud Run Service / IAP](./gcp-serverless-pipeline/06-ui-demo/) | 常駐サービス、IAP 認証 |
+| 07 | [Eventarc / Workflows](./gcp-serverless-pipeline/07-workflow/) | イベント駆動、GCS→Eventarc→Workflows→Job の統合 |
+| 08 | [Workload Identity Federation](./gcp-serverless-pipeline/08-cicd/) | GitHub Actions の鍵レス認証 |
+
+`07-workflow/components/` に Workflows / Pub/Sub / Eventarc の単体最小モジュールあり。
+
+### 前提条件
+
+| ツール | 用途 |
+|--------|------|
+| [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
+| [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) | 認証・リソースの確認 |
+
 ## 使い方
 
 1. 各チュートリアルのディレクトリに移動
@@ -125,6 +150,7 @@ maitake/
 │   ├── 01-vpc-basics/   # VPC 基礎
 │   └── 02-alb/          # ALB 負荷分散
 ├── azure-network/       # Azure ネットワーク ハンズオン
+├── gcp-serverless-pipeline/  # GCP サーバーレス・イベント駆動パイプライン (01〜08)
 └── kubernetes/          # Kubernetes ハンズオン
     ├── 02-pod/          # Pod 基礎
     ├── 03-manifest/     # マニフェストファイル

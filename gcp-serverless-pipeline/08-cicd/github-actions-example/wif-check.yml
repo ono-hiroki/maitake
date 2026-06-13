@@ -1,0 +1,43 @@
+# =============================================================================
+# サンプル GitHub Actions: Workload Identity Federation の動作確認
+# -----------------------------------------------------------------------------
+# 08-cicd を apply した後、このファイルを自分のリポジトリの
+# .github/workflows/ に置くと、SAキー(JSON)無しで GCP 認証できるか確認できる。
+#
+# 使い方:
+#   1. 08-cicd を apply（github_owner / github_repository を自分のものに）
+#   2. terraform output で値を取得し、下の <...> を置き換える:
+#        workload_identity_provider = terraform output -raw workload_identity_provider
+#        service_account            = terraform output -raw cicd_service_account
+#   3. このファイルを <repo>/.github/workflows/wif-check.yml としてコミット・push
+#   4. Actions タブから手動実行（または gh workflow run wif-check.yml）
+#
+# ※ provider パスと SA メールは秘密情報ではないのでベタ書きでよい（鍵レスの利点。Secrets 不要）。
+# =============================================================================
+name: wif-check
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write # ← OIDC トークン発行に必須。これが無いと auth が失敗する
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - id: auth
+        name: Authenticate to GCP (keyless / WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: <terraform output: workload_identity_provider>
+          service_account: <terraform output: cicd_service_account>
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Who am I
+        run: |
+          gcloud auth list
+          gcloud config get-value account   # active が CI/CD SA なら成功

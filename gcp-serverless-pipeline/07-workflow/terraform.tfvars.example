@@ -1,0 +1,4 @@
+project_id = "your-project-id"
+region     = "asia-northeast1"
+env        = "sbx"
+name       = "demo-wf"

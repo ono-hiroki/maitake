@@ -1,0 +1,20 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+# tfvars は環境固有値を含むためコミットしない（.example のみ管理）
+*.tfvars
+*.tfvars.local
+# terraform graph の生成物
+graph.dot
+graph.svg
+graph.png
+.terraform.lock.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
