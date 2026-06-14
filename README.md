@@ -105,23 +105,23 @@
 | [Terraform](https://developer.hashicorp.com/terraform/install) | IaC |
 | [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli) | リソースの確認 |
 
-## GCP サーバーレス・イベント駆動パイプライン
+## GCP サービス Terraform ハンズオン
 
-「ファイル投入 → 自動処理 → DB 保存」というサーバーレス・イベント駆動構成を、
-各要素を独立した最小の Terraform root として 1 つずつ作りながら GCP を学ぶハンズオン。
+GCP の主要サービスを、それぞれ独立した最小の Terraform root として単体で構築して学ぶサンプル集。
+各サンプルは自己完結していて、好きなものから単体で `apply` できる。
 
-| # | タイトル | 学習内容 |
-|---|----------|----------|
-| 01 | [VPC / Subnet / Firewall](./gcp-serverless-pipeline/01-network/) | カスタムモード VPC、サブネット、ファイアウォール |
-| 02 | [BigQuery Dataset / Table](./gcp-serverless-pipeline/02-bigquery/) | サーバレス DWH、データセット/テーブル/スキーマ |
-| 03 | [Firestore](./gcp-serverless-pipeline/03-firestore/) | NoSQL ドキュメント DB |
-| 04 | [Cloud SQL / Secret Manager](./gcp-serverless-pipeline/04-cloudsql/) | Private Service Access、秘密を tfstate に残さない設計 |
-| 05 | [Cloud Run Job](./gcp-serverless-pipeline/05-cloudrun-job/) | バッチ実行、Artifact Registry、Service Account |
-| 06 | [Cloud Run Service / IAP](./gcp-serverless-pipeline/06-cloudrun-service/) | 常駐サービス、IAP 認証 |
-| 07 | [Eventarc / Workflows](./gcp-serverless-pipeline/07-workflow/) | イベント駆動、GCS→Eventarc→Workflows→Job の統合 |
-| 08 | [Workload Identity Federation](./gcp-serverless-pipeline/08-cicd/) | GitHub Actions の鍵レス認証 |
-
-`07-workflow/components/` に Workflows / Pub/Sub / Eventarc の単体最小モジュールあり。
+| タイトル | 学習内容 |
+|----------|----------|
+| [VPC / Subnet / Firewall](./gcp-terraform-handson/vpc-network/) | カスタムモード VPC、サブネット、ファイアウォール |
+| [BigQuery](./gcp-terraform-handson/bigquery/) | サーバレス DWH、データセット/テーブル/スキーマ |
+| [Firestore](./gcp-terraform-handson/firestore/) | NoSQL ドキュメント DB |
+| [Cloud SQL](./gcp-terraform-handson/cloudsql/) | Private Service Access、秘密を tfstate に残さない設計 |
+| [Cloud Run Job](./gcp-terraform-handson/cloudrun-job/) | バッチ実行、Artifact Registry、Service Account |
+| [Cloud Run Service / IAP](./gcp-terraform-handson/cloudrun-service-iap/) | 常駐サービス、IAP 認証 |
+| [Workflows](./gcp-terraform-handson/workflows/) | YAML オーケストレーション（単体） |
+| [Pub/Sub](./gcp-terraform-handson/pubsub/) | topic / subscription |
+| [Eventarc](./gcp-terraform-handson/eventarc/) | イベント → 自動起動（単体） |
+| [Workload Identity Federation](./gcp-terraform-handson/workload-identity-federation/) | GitHub Actions の鍵レス認証 |
 
 ### 前提条件
 
@@ -150,7 +150,7 @@ maitake/
 │   ├── 01-vpc-basics/   # VPC 基礎
 │   └── 02-alb/          # ALB 負荷分散
 ├── azure-network/       # Azure ネットワーク ハンズオン
-├── gcp-serverless-pipeline/  # GCP サーバーレス・イベント駆動パイプライン (01〜08)
+├── gcp-terraform-handson/    # GCP 各サービスの単体 Terraform サンプル集
 └── kubernetes/          # Kubernetes ハンズオン
     ├── 02-pod/          # Pod 基礎
     ├── 03-manifest/     # マニフェストファイル
