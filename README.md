@@ -123,6 +123,15 @@ GCP の主要サービスを、それぞれ独立した最小の Terraform root 
 | [Eventarc](./gcp-terraform-handson/eventarc/) | イベント → 自動起動（単体） |
 | [Workload Identity Federation](./gcp-terraform-handson/workload-identity-federation/) | GitHub Actions の鍵レス認証 |
 
+## GCP Service Account インパーソネーション
+
+個人の権限（ADC）で `terraform apply` している状態から、terraform 実行用 SA を impersonate して apply する状態へ移行する流れを最小構成で体感するラボ。
+
+| ディレクトリ | 学習内容 |
+|------|---------|
+| [01-bootstrap-sa](./gcp-sa-impersonation/01-bootstrap-sa/) | 個人 ADC で実行用 SA + tokenCreator を用意（ブートストラップ） |
+| [02-impersonated-apply](./gcp-sa-impersonation/02-impersonated-apply/) | 環境変数だけで impersonate に切替、whoami で確認 |
+
 ### 前提条件
 
 | ツール | 用途 |
@@ -151,6 +160,9 @@ maitake/
 │   └── 02-alb/          # ALB 負荷分散
 ├── azure-network/       # Azure ネットワーク ハンズオン
 ├── gcp-terraform-handson/    # GCP 各サービスの単体 Terraform サンプル集
+├── gcp-sa-impersonation/     # SA インパーソネートで terraform apply するラボ
+│   ├── 01-bootstrap-sa/      # 実行用 SA + tokenCreator を用意
+│   └── 02-impersonated-apply/ # 環境変数で impersonate 切替
 └── kubernetes/          # Kubernetes ハンズオン
     ├── 02-pod/          # Pod 基礎
     ├── 03-manifest/     # マニフェストファイル
